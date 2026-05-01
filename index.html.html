@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Khannaya ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+/* 🚫 NO SCROLL */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* hide scrollbar */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* FULL SCREEN FIX */
+.container {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* TITLE */
+h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+/* MESSAGE */
+#message {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    min-height: 140px;
+    max-width: 90%;
+}
+
+/* BUTTON */
+button {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 12px 22px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #ff4b5c;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* CONFETTI */
+canvas {
+    position: fixed !important;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    #message { font-size: 1rem; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Happy Birthday Khannaya 🎂❤️</h1>
+    <div id="message"></div>
+    <button onclick="start()">Tap for Surprise 🎁</button>
+</div>
+
+<!-- 🎵 MUSIC -->
+<audio id="music" loop preload="auto">
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎉 CONFETTI LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+const lines = [
+    "Hey Khannaya 💖",
+    "Today is your special day 🎉",
+    "You make my world brighter ✨",
+    "I’m so lucky to have you ❤️",
+    "You are my happiness 😊",
+    "Stay always smiling 💫",
+    "I love you forever 🫶",
+    "Happy Birthday 🎂❤️"
+];
+
+let i = 0;
+let j = 0;
+
+/* START */
+function start() {
+    document.querySelector("button").style.display = "none";
+
+    // 🎵 MUSIC FIXED PLAY
+    const music = document.getElementById("music");
+    music.currentTime = 0;
+    music.volume = 1;
+    music.play().catch(err => {
+        console.log("Music blocked until user interaction");
+    });
+
+    typeWriter();
+    startConfetti();
+}
+
+/* TYPEWRITER */
+function typeWriter() {
+    if (i < lines.length) {
+        let line = lines[i];
+
+        if (j < line.length) {
+            document.getElementById("message").innerHTML += line.charAt(j);
+            j++;
+            setTimeout(typeWriter, 50);
+        } else {
+            document.getElementById("message").innerHTML += "<br><br>";
+            i++;
+            j = 0;
+            setTimeout(typeWriter, 500);
+        }
+    }
+}
+
+/* CONFETTI */
+function startConfetti() {
+    const duration = 6000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+            particleCount: 5,
+            spread: 80,
+            origin: { x: 0 }
+        });
+
+        confetti({
+            particleCount: 5,
+            spread: 80,
+            origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    })();
+}
+</script>
+
+</body>
+</html>
